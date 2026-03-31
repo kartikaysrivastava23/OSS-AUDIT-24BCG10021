@@ -1,101 +1,105 @@
 # Open Source Audit: VLC Media Player
 
-**Course:** Open Source Software (NGMC)
-**Student:** Kartikay Srivastava | **Registration:** 24BCG10021
-**Slot:** E22 | **Date:** 31/03/2026
+This repository contains a series of shell scripts written for an academic audit of the VLC Media Player, as part of the Open Source Software (NGMC) course.
+
+**Student:** Kartikay Srivastava (24BCG10021)
 
 ## Why VLC?
 
-I chose VLC Media Player for this audit because of its awesome history starting as a student project at a French university. It also has an interesting dual-license setup (GPL for the app, LGPL for the core engine) and is one of the most downloaded open-source apps ever.
+VLC Media Player was chosen for this audit due to its rich history as a student project that evolved into one of the most downloaded open-source applications worldwide. Its dual-license model (GPL for the application, LGPL for the core library) also presents an interesting case study in open-source strategy and philosophy.
 
-\---
+## Repository Contents
 
-## What's in this repo?
+This repository contains several shell scripts designed to audit a Linux system, with a specific focus on the VLC Media Player installation.
 
 ```text
-oss-audit-24BCG10021/
-│
-├── README.md                          <-- You're reading this
-│
-├── scripts/
-│   ├── script1\_system\_identity.sh     <-- Shows system info
-│   ├── script2\_package\_inspector.sh   <-- Checks if a FOSS package is installed
-│   ├── script3\_disk\_permission\_auditor.sh <-- Scans disk usage and permissions
-│   ├── script4\_log\_analyzer.sh        <-- Searches log files for keywords
-│   └── script5\_manifesto\_generator.sh <-- Generates an open-source manifesto
-│
-└── report/
-    └── OSS\_Audit\_24BCG10021.pdf       <-- Final project report 
+.
+├── README.md                      # This file
+├── Project_Outline.md             # An outline for the final project report
+├── manifesto.txt                  # An example output from script5
+└── scripts/
+    ├── script1_system_identity.sh     # Displays basic system and user information
+    ├── script2_package_inspector.sh   # Checks if a FOSS package like VLC is installed
+    ├── script3_disk_permission_auditor.sh # Audits disk usage and permissions of key directories
+    ├── script4_log_analyzer.sh        # Searches log files for specific keywords
+    └── script5_manifesto_generator.sh # Interactively generates a personal FOSS manifesto
 ```
 
-\---
+## Script Descriptions
 
-## Script Breakdown
+### 1. System Identity (`script1_system_identity.sh`)
 
-### 1\. System Identity Report (`script1\_system\_identity.sh`)
+This script generates a report that identifies the system. It displays the Linux distribution, kernel version, current user, home directory, system uptime, and the current date and time. It also provides a brief note on the GPL license used by the Linux kernel and VLC.
 
-This script just prints out a welcome screen with my basic system info like the Linux distro, kernel version, who is logged in, uptime, and the current date/time. It also mentions the OS license. I used basic bash variables, command substitution (like `$(whoami)`), and `echo` to format the output nicely.
+### 2. Package Inspector (`script2_package_inspector.sh`)
 
-### 2\. Package Inspector (`script2\_package\_inspector.sh`)
+This script checks whether a specific package (defaulting to `vlc`) is installed on the system. It automatically detects the system's package manager (`dpkg` for Debian/Ubuntu or `rpm` for Fedora/RedHat) and displays the package version and description if found.
 
-I wrote this to check if a specific open-source package (like VLC) is installed. It automatically detects if you're using `rpm` (Fedora/RedHat) or `dpkg` (Ubuntu/Debian) to do the check. Then it grabs the package version and prints a quick philosophical note depending on the software. It makes heavy use of `if/else`, `case` statements, and piping data into `grep`.
+### 3. Disk & Permission Auditor (`script3_disk_permission_auditor.sh`)
 
-### 3\. Disk \& Permission Auditor (`script3\_disk\_permission\_auditor.sh`)
+This script audits important system directories (`/etc`, `/var/log`, `/home`, etc.), reporting their permissions, owner, and disk usage. It includes specific checks for VLC's plugin and configuration directories to analyze their footprint and permissions structure.
 
-This one loops through important directories (like `/etc`, `/var/log`, `/home`) and checks their permissions, owner, and size. It also specifically looks for VLC's plugin and config folders to see how much space they take up. It relies on standard `for` loops, `ls -ld`, `du`, and `awk` to chop up the output.
+### 4. Log Analyzer (`script4_log_analyzer.sh`)
 
-### 4\. Log Analyzer (`script4\_log\_analyzer.sh`)
+A utility to scan a given log file for a specified keyword (e.g., `error`, `warning`). The script counts the total occurrences of the keyword and displays the last five matching lines. It includes a retry mechanism in case the log file is initially empty.
 
-A handy script to scan through a log file and count how many times a word (like `error`) shows up. If it finds matches, it prints the last 5 of them. I also added a retry loop so if the file is empty when you run it, it waits a bit and tries again before giving up. Takes command-line arguments (e.g., `$1` and `$2`).
+### 5. Manifesto Generator (`script5_manifesto_generator.sh`)
 
-### 5\. Manifesto Generator (`script5\_manifesto\_generator.sh`)
+An interactive script that prompts the user for their favorite open-source tool and their thoughts on software freedom. It then generates a personalized open-source "manifesto" and saves it to a text file named `manifesto_[your_username].txt`.
 
-An interactive script! It asks you 3 quick questions using `read -p`. Based on what you type, it generates a personalized text file (`manifesto\_\[your\_username].txt`) with a short open-source philosophy statement. Shows off string appending and writing output to files.
+## How to Use
 
-\---
+### Prerequisites
 
-## How to run them
+*   A Linux-based operating system (tested on Ubuntu).
+*   Bash shell.
+*   Standard command-line utilities (`grep`, `awk`, `du`, `cut`, etc.).
+*   (Optional) VLC Media Player installed to get full output from all scripts.
 
-### What you need
+### Execution Steps
 
-* A Linux box (I tested this on Ubuntu).
-* Bash shell.
-* VLC installed (if you want Scripts 2 and 3 to show everything).
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/kartikaysrivastava23/oss-audit-24bcg10021.git
+    cd oss-audit-24bcg10021/scripts
+    ```
 
-### Steps
+2.  **Make the scripts executable:**
+    ```bash
+    chmod +x *.sh
+    ```
 
-1. **Clone the repo:**
+3.  **Run the desired script:**
 
-```bash
-   git clone https://github.com/kartikaysrivastava23/oss-audit-24BCG10021.git
-   cd oss-audit-24BCG10021/scripts
-   ```
-
-2. **Give them execute permissions:**
-
-```bash
-   chmod +x \*.sh
-   ```
-
-3. **Run them!**
-
-   * **Script 1:** `./script1\_system\_identity.sh`
-   * **Script 2:** `./script2\_package\_inspector.sh` (Checks for VLC by default, but you can edit the script to check others).
-   * **Script 3:** `./script3\_disk\_permission\_auditor.sh` (Might need `sudo` to see the sizes of some restricted folders like `/var/log`).
-   * **Script 4:** `./script4\_log\_analyzer.sh /var/log/syslog error` (You can swap `error` for `WARNING` or whatever you're looking for).
-   * **Script 5:** `./script5\_manifesto\_generator.sh` (Just answer the prompts).
-
-\---
+    *   **System Identity:**
+        ```bash
+        ./script1_system_identity.sh
+        ```
+    *   **Package Inspector:**
+        ```bash
+        ./script2_package_inspector.sh
+        ```
+    *   **Disk & Permission Auditor** (use `sudo` for full access):
+        ```bash
+        sudo ./script3_disk_permission_auditor.sh
+        ```
+    *   **Log Analyzer** (example with syslog):
+        ```bash
+        ./script4_log_analyzer.sh /var/log/syslog error
+        ```
+    *   **Manifesto Generator:**
+        ```bash
+        ./script5_manifesto_generator.sh
+        ```
 
 ## Tools Used
 
-All the scripts run on default Linux tools (`uname`, `date`, `whoami`, `grep`, `awk`, `cut`, `du`, `find`, `tail`, `cat`). No crazy external dependencies.
-If you want to install VLC to get the full output for Scripts 2 and 3, run:
-`sudo apt install vlc` (Ubuntu/Debian) or `sudo dnf install vlc` (Fedora).
+All scripts are written in Bash and rely on standard, pre-installed Linux command-line tools. No external dependencies are required.
 
-\---
+To install VLC for a complete audit experience, you can use your distribution's package manager:
+*   **Debian/Ubuntu:** `sudo apt install vlc`
+*   **Fedora/CentOS:** `sudo dnf install vlc`
 
 ## License
 
-I wrote these scripts for my academic coursework. They are released under the MIT License, so do whatever you want with them!
-
+The scripts in this repository were created for academic purposes and are released under the **MIT License**. You are free to use, modify, and distribute them.
